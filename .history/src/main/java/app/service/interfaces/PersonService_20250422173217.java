@@ -15,24 +15,17 @@ public interface PersonService {
     void agregarPersona(PersonDto person) throws Exception;
     void eliminarPersona(long id) throws Exception;
     PersonDto obtenerPersonaPorId(long id) throws Exception;
-    void updatePerson(PersonDto person) throws Exception;
-    PersonDto findByUserName(String userName) throws Exception;
   
     
     // Operaciones específicas para administradores (se espera que el objeto tenga userType="ADMIN")
     void agregarAdministrador(AdministradorDto administrador) throws Exception;
     void eliminarAdministrador(long id) throws Exception;
-    
  
     
     
     // Operaciones específicas para invitados (userType="INVITADO")
     void agregarInvitado(GuestDto invitado) throws Exception;
     void eliminarInvitado(long id) throws Exception;
-    void disableGuest(GuestDto guest) throws Exception;
-    void enableGuest(GuestDto guest) throws Exception;
-    void updateGuest(GuestDto guest) throws Exception;
-    GuestDto findGuestById(long id) throws Exception;
 
     
    

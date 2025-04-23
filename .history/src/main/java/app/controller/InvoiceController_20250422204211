@@ -1,0 +1,110 @@
+package app.controller;
+
+import java.util.Date;
+import java.util.List;
+import app.controller.validator.InvoiceValidator;
+import app.dto.InvoiceDto;
+import app.dto.PersonDto;
+import app.service.interfaces.InvoiceService;
+
+/**
+ * Controller para gestionar facturas (Invoice).
+ */
+public class InvoiceController implements ControllerInterface<InvoiceDto> {
+
+    private final InvoiceService invoiceService;
+    private final InvoiceValidator validator;
+
+    public InvoiceController(InvoiceService invoiceService) {
+        this.invoiceService = invoiceService;
+        this.validator = new InvoiceValidator();
+    }
+
+    @Override
+    public void create(String[] params) {
+        try {
+            // params: [0]=id, [1]=socioDocument, [2]=fechaFactura, [3]=valorTotal, [4]=metodoPago, [5]=fechaPago, [6]=status
+            long id           = validator.validId(params[0]);
+            long socioDoc     = validator.validSocioDocument(params[1]);
+            Date fechaFactura = validator.validFechaFactura(params[2]);
+            double valorTotal = validator.validValorTotal(params[3]);
+            validator.validMetodoPago(params[4]);
+            Date fechaPago    = validator.validFechaPago(params[5]);
+            boolean status    = validator.validStatus(params[6]);
+
+            // Construir el DTO
+            PersonDto socio = new PersonDto();
+            socio.setDocument(socioDoc);
+            InvoiceDto invoice = new InvoiceDto(id, socio, fechaFactura, valorTotal, params[4], fechaPago, status);
+
+            invoiceService.createInvoice(invoice);
+            System.out.println("Factura creada exitosamente: " + id);
+        } catch (Exception e) {
+            System.err.println("Error al crear factura: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public InvoiceDto findById(String[] params) {
+        try {
+            long id = validator.validId(params[0]);
+            InvoiceDto invoice = invoiceService.findInvoiceById(id);
+            System.out.println(invoice);
+            return invoice;
+        } catch (Exception e) {
+            System.err.println("Error al buscar factura: " + e.getMessage());
+            return null;
+        }
+    }
+
+    @Override
+    public void update(String[] params) {
+        try {
+            // Mismos parámetros que create
+            long id           = validator.validId(params[0]);
+            long socioDoc     = validator.validSocioDocument(params[1]);
+            Date fechaFactura = validator.validFechaFactura(params[2]);
+            double valorTotal = validator.validValorTotal(params[3]);
+            validator.validMetodoPago(params[4]);
+            Date fechaPago    = validator.validFechaPago(params[5]);
+            boolean status    = validator.validStatus(params[6]);
+
+            PersonDto socio = new PersonDto();
+            socio.setDocument(socioDoc);
+            InvoiceDto invoice = new InvoiceDto(id, socio, fechaFactura, valorTotal, params[4], fechaPago, status);
+
+            invoiceService.updateInvoice(invoice);
+            System.out.println("Factura actualizada exitosamente: " + id);
+        } catch (Exception e) {
+            System.err.println("Error al actualizar factura: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void delete(String[] params) {
+        try {
+            long id = validator.validId(params[0]);
+            InvoiceDto invoice = new InvoiceDto();
+            invoice.setId(id);
+
+            invoiceService.deleteInvoice(invoice);
+            System.out.println("Factura eliminada exitosamente: " + id);
+        } catch (Exception e) {
+            System.err.println("Error al eliminar factura: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void listAll() {
+        try {
+            List<InvoiceDto> all = invoiceService.getAllInvoices();
+            if (all.isEmpty()) {
+                System.out.println("No hay facturas registradas.");
+            } else {
+                all.forEach(System.out::println);
+            }
+        } catch (Exception e) {
+            System.err.println("Error al listar facturas: " + e.getMessage());
+        }
+    }
+}

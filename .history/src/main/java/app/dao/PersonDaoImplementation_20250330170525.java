@@ -31,42 +31,6 @@ public class PersonDaoImplementation implements PersonDao {
     }
 
     @Override
-    public GuestDto findGuestById(GuestDto guestDto) throws Exception {
-        String query = "SELECT ID, NAME, DOCUMENT FROM GUEST WHERE ID = ?";
-        try (Connection connection = MYSQLConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setLong(1, guestDto.getId());
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    guestDto.setName(resultSet.getString("NAME"));
-                    guestDto.setDocument(resultSet.getLong("DOCUMENT"));
-                    return guestDto;
-                }
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public PersonDto findById(PersonDto personDto) throws Exception {
-        String query = "SELECT ID, NAME, DOCUMENT FROM PERSON WHERE ID = ?";
-        try (Connection connection = MYSQLConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setLong(1, personDto.getId());
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    Person person = new Person();
-                    person.setId(resultSet.getLong("ID"));
-                    person.setName(resultSet.getString("NAME"));
-                    person.setDocument(resultSet.getLong("DOCUMENT"));
-                    return Helper.parse(person);
-                }
-            }
-        }
-        return null;
-    }
-
-    @Override
     public void createPerson(PersonDto personDto) throws Exception {
         Person person = Helper.parse(personDto);
         String query = "INSERT INTO PERSON (NAME, DOCUMENT) VALUES (?, ?)";
@@ -141,48 +105,6 @@ public class PersonDaoImplementation implements PersonDao {
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, personDto.getPassword());
             preparedStatement.setLong(2, personDto.getDocument());
-            preparedStatement.executeUpdate();
-        }
-    }
-/** 
- * actualiza el nombre de una persona en la base de datos.
- */
-    @Override
-    public void updatePerson(PersonDto personDto) throws Exception {
-        String query = "UPDATE PERSON SET NAME = ? WHERE DOCUMENT = ?";
-        try (Connection connection = MYSQLConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, personDto.getName());
-            preparedStatement.setLong(2, personDto.getDocument());
-            preparedStatement.executeUpdate();
-        }
-    }
-
-
-    /**
-     * Actualiza la información de un invitado en la base de datos.
-     */
-    @Override
-    public void updateGuest(GuestDto guestDto) throws Exception {
-        String query = "UPDATE GUEST SET NAME = ?, DOCUMENT = ? WHERE ID = ?";
-        try (Connection connection = MYSQLConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, guestDto.getName());
-            preparedStatement.setLong(2, guestDto.getDocument());
-            preparedStatement.setLong(3, guestDto.getId());
-            preparedStatement.executeUpdate();
-        }
-    }
-
-    /**
-     * elimina un invitado en la base de datos mediante su ID.
-     */
-    @Override
-    public void deleteGuest(GuestDto guestDto) throws Exception {
-        String query = "DELETE FROM GUEST WHERE ID = ?";
-        try (Connection connection = MYSQLConnection.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setLong(1, guestDto.getId());
             preparedStatement.executeUpdate();
         }
     }

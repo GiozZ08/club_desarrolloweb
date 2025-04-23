@@ -16,5 +16,4 @@ public interface MembresiaService {
     void deleteMembresia(MembresiaDto membresiaDto) throws Exception;
 
     boolean existsById(long id) throws Exception;
-
 }

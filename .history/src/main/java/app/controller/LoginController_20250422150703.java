@@ -3,9 +3,9 @@ package app.controller;
 import app.controller.validator.PersonValidator;
 import app.dto.PersonDto;
 import app.helpers.Utils;
-import app.service.LoginServiceImpl;
 import app.service.interfaces.LoginService;
-import app.service.interfaces.PersonService; // o tu implementación concreta
+import app.service.interfaces.PersonService;
+import app.service.LoginServiceImpl; // o tu implementación concreta
 // import app.service.LoginServiceImpl; // si usas inyección manual
 
 /**
@@ -44,7 +44,8 @@ public class LoginController implements ControllerInterface {
         // Una vez autenticado, despliega el menú general
         System.out.println("Sesión iniciada correctamente.");
         PersonController pc = new PersonController(
-            (PersonService) loginService, null, null, null
+            (PersonService) loginService, // o inyecta el PersonService adecuado
+            /* ... otros servicios ... */
         );
         pc.session();
     }
