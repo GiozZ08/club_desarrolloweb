@@ -10,23 +10,6 @@ import app.dto.PersonDto;
  */
 public interface PersonDao {
 
-  /**
-   * Actualiza la información de una persona en la base de datos.
-   * @param userName
-   * @return
-   * @throws Exception
-   */
-  void updatePerson(PersonDto userName) throws Exception;
-
-    /**
-     * Busca una persona en la base de datos mediante su ID.
-     *
-     * @param personDto DTO con el ID de la persona a buscar.
-     * @return PersonDto con la información de la persona si se encuentra, null en caso contrario.
-     * @throws Exception Si ocurre un error en la consulta.
-     */
-    PersonDto findById(PersonDto personDto) throws Exception;
-
    /**
      * Busca una persona en la base de datos mediante su nombre de usuario.
      *
@@ -147,32 +130,7 @@ public interface PersonDao {
      */
     void enableGuest(GuestDto guestDto) throws Exception;
 
-    
-    /**
-     * Actualiza datos de un invitado en la base de datos.
-     * @param partnerDto
-     * @throws Exception
-     */
-    void updateGuest(GuestDto guestDto) throws Exception;
-
-    /**
-     * Busca un invitado en la base de datos mediante su documento de identidad.
-     *
-     * @param guestDto DTO con el documento del invitado a buscar.
-     * @return GuestDto con la información del invitado encontrado o null si no existe.
-     * @throws Exception Si ocurre un error durante la consulta.
-     */
-    GuestDto findGuestById(GuestDto guestDto) throws Exception;
-
-    /**
-     * Elimina un invitado de la base de datos.
-     * @param partnerDto
-     * @throws Exception
-     */
-    void deleteGuest(GuestDto guestDto) throws Exception;
-
-  
-    /**
+       /**
      * Crea un nuevo socio en la base de datos.
      *
      * @param partnerDto DTO con la información del socio.
@@ -204,8 +162,6 @@ void updatePartner(PartnerDto partnerDto) throws Exception;
  * @throws Exception Si ocurre un error durante la consulta.
  */
 boolean existsPartnerByDocument(long document) throws Exception;
-
-
 
 
 }

@@ -1,9 +1,5 @@
 package app.controller.validator;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 /**
  * Clase abstracta que provee métodos comunes para validar entradas de datos.
  *
@@ -21,11 +17,10 @@ public abstract class CommonsValidator {
      * @param value     Valor que se desea validar.
      * @throws Exception si el valor es nulo o una cadena vacía.
      */
-    public String isValidString(String fieldName, String value) throws Exception {
+    public void isValidString(String fieldName, String value) throws Exception {
         if (value == null || value.trim().isEmpty()) {
             throw new Exception(fieldName + " no puede ser un valor vacío");
         }
-        return value.trim();
     }
 
     /**
@@ -78,24 +73,4 @@ public abstract class CommonsValidator {
             throw new Exception(fieldName + " debe ser un valor decimal válido");
         }
     }
-    /**
-     * Valida y convierte una cadena a un objeto Date.
-     *
-     * @param fieldName Nombre del campo a validar.
-     * @param value     Cadena que representa la fecha.
-     * @return Objeto Date resultante.
-     * @throws Exception si el valor es nulo, vacío o tiene formato incorrecto.
-     */
-
-    public Date isValidDate(String fieldName, String value) throws Exception {
-        isValidString(fieldName, value);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); // Puedes cambiar el formato si usás otro
-        sdf.setLenient(false); // Para que no acepte fechas como 2023-02-30
-        try {
-            return sdf.parse(value.trim());
-        } catch (ParseException e) {
-            throw new Exception(fieldName + " debe tener el formato yyyy-MM-dd");
-        }
-
-}
 }

@@ -31,7 +31,7 @@ public class PersonDaoImplementation implements PersonDao {
     }
 
     @Override
-    public GuestDto findGuestById(GuestDto guestDto) throws Exception {
+    public void findGuestById(GuestDto guestDto) throws Exception {
         String query = "SELECT ID, NAME, DOCUMENT FROM GUEST WHERE ID = ?";
         try (Connection connection = MYSQLConnection.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -40,11 +40,9 @@ public class PersonDaoImplementation implements PersonDao {
                 if (resultSet.next()) {
                     guestDto.setName(resultSet.getString("NAME"));
                     guestDto.setDocument(resultSet.getLong("DOCUMENT"));
-                    return guestDto;
                 }
             }
         }
-        return null;
     }
 
     @Override
