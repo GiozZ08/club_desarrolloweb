@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Club DevWeb · Gestión de Membresías</title>
+
+  <!-- Bootstrap CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+
+  <!-- Estilos propios -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <div class="d-flex vh-100" id="wrapper">
+    <!-- Sidebar -->
+    <nav
+      id="sidebar"
+      class="bg-dark text-white p-3"
+      style="min-width: 250px;"
+    >
+      <h4 class="text-center mb-4">📋 Menú</h4>
+      <ul class="list-unstyled ps-0">
+        <li class="mb-2"><a href="dashboard.html"     class="btn btn-toggle text-white">Inicio</a></li>
+        <li class="mb-2"><a href="person.html"        class="btn btn-toggle text-white">Gestión de usuarios</a></li>
+        <li class="mb-2"><a href="invoice.html"       class="btn btn-toggle text-white">Gestión de facturas</a></li>
+        <li class="mb-2"><a href="membership.html"    class="btn btn-toggle text-white active">Gestión de membresías</a></li>
+        <li class="mb-2"><a href="consumo.html"       class="btn btn-toggle text-white">Gestión de consumos</a></li>
+        <li class="mb-2"><a href="detail.html"        class="btn btn-toggle text-white">Detalles de factura</a></li>
+        <li class="border-top my-3"></li>
+        <li><button id="btnLogout" class="btn btn-danger w-100">Cerrar sesión</button></li>
+      </ul>
+    </nav>
+    <!-- /#sidebar -->
+
+    <!-- Page content -->
+    <div id="page-content-wrapper" class="w-100 overflow-auto">
+      <!-- Top navbar -->
+      <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <div class="container-fluid">
+          <button class="btn btn-primary" id="menu-toggle">☰</button>
+          <h2 class="ms-3 mb-0">Gestión de Membresías</h2>
+        </div>
+      </nav>
+
+      <div class="container-fluid p-4">
+        <!-- Botón para abrir modal de nueva membresía -->
+        <button class="btn btn-success mb-3" id="btnNewMembership">+ Nueva Membresía</button>
+
+        <!-- Tabla de membresías -->
+        <div class="card">
+          <div class="card-header">Listado de Membresías</div>
+          <div class="card-body p-0">
+            <table class="table table-striped mb-0">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Estado</th>
+                  <th>Fondo Actual</th>
+                  <th>Límite Fondo</th>
+                  <th>Tipo</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="membershipTable">
+                <!-- JS inyectará filas aquí -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+  </div>
+  <!-- /#wrapper -->
+
+  <!-- Modal para crear/editar membresía -->
+  <div class="modal fade" id="membershipModal" tabindex="-1">
+    <div class="modal-dialog">
+      <form id="membershipForm" class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="membershipModalTitle">Nueva Membresía</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="membershipId" />
+          <div class="mb-3">
+            <label for="inputEstado" class="form-label">Estado</label>
+            <input type="text" id="inputEstado" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label for="inputFondo" class="form-label">Fondo Actual</label>
+            <input type="number" step="0.01" id="inputFondo" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label for="inputLimite" class="form-label">Límite de Fondo</label>
+            <input type="number" step="0.01" id="inputLimite" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label for="inputTipo" class="form-label">Tipo de Membresía</label>
+            <input type="text" id="inputTipo" class="form-control" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary" id="btnSaveMembership">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS + Popper -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+  ></script>
+  <!-- Lógica de front-end -->
+  <script src="js/membership.js"></script>
+</body>
+</html>
